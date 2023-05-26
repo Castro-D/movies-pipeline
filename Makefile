@@ -19,7 +19,10 @@ infra-down:
 	terraform -chdir=./terraform destroy
 
 db-migration:
-	@read -p "Enter migration name:" migration_name; docker exec webserver yoyo new ./migrations -m "$$migration_name"
+	@read -p "Enter migration name:" migration_name; docker exec pipelinerunner yoyo new ./migrations -m "$${migration_name}_$(date +%Y%m%d%H%M%S)"
 
 warehouse-migration:
-	docker exec webserver yoyo develop --no-config-file --database postgres://sdeuser:sdepassword1234@warehouse:5432/covid ./migrations
+	docker exec pipelinerunner yoyo develop --no-config-file --database postgres://sdeuser:sdepassword1234@warehouse:5432/covid ./migrations
+
+warehouse-rollback:
+	docker exec pipelinerunner yoyo rollback --no-config-file --database postgres://sdeuser:sdepassword1234@warehouse:5432/covid ./migrations
