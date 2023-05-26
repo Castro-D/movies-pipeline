@@ -45,7 +45,7 @@ resource "google_compute_address" "static" {
 
 resource "google_compute_instance" "dev" {
   name         = "devserver"
-  machine_type = "f1-micro"
+  machine_type = "e2-standard-4"
   zone         = "${var.region}-a"
   tags         = ["externalssh","webserver"]
 
