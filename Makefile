@@ -4,7 +4,7 @@ docker-spin-up:
 sleeper:
 	sleep 15
 
-up: docker-spin-up sleeper warehouse-migration
+up: docker-spin-up sleeper
 
 down:
 	docker compose down
