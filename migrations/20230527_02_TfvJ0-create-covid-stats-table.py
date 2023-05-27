@@ -11,15 +11,13 @@ steps = [
         """
         CREATE TABLE covid.covid_stats
         (
-            id INT,
+            id serial primary key,
             country_region VARCHAR(255),
             last_update TIMESTAMP,
             confirmed BIGINT,
             deaths BIGINT,
             incident_rate DOUBLE PRECISION,
-            case_fatality_ratio DOUBLE PRECISION,
-            PRIMARY KEY (id)
-            
+            case_fatality_ratio DOUBLE PRECISION
         )
         """,
         "DROP TABLE covid.covid_stats",
