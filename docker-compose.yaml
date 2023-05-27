@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}" ]
+      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}" ]
       interval: 5s
       retries: 5
     restart: always
@@ -29,8 +29,10 @@ services:
       WAREHOUSE_PASSWORD: ${POSTGRES_PASSWORD}
       WAREHOUSE_DB: ${POSTGRES_DB}
       WAREHOUSE_HOST: ${POSTGRES_HOST}
-      WARREHOUSE_PORT: ${POSTGRES_PORT}
+      WAREHOUSE_PORT: ${POSTGRES_PORT}
     command: tail -F anything
+    depends_on: 
+      - warehouse
 
   dashboard:
     image: metabase/metabase
