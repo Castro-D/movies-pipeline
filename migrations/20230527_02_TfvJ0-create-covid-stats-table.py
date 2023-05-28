@@ -17,7 +17,8 @@ steps = [
             confirmed BIGINT,
             deaths BIGINT,
             incident_rate DOUBLE PRECISION,
-            case_fatality_ratio DOUBLE PRECISION
+            case_fatality_ratio DOUBLE PRECISION,
+            combined_key VARCHAR(255) UNIQUE
         )
         """,
         "DROP TABLE covid.covid_stats",

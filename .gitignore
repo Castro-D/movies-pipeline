@@ -80,3 +80,4 @@ override.tf.json
 .terraformrc
 terraform.rc
 Footer
+.coverage

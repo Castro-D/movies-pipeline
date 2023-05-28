@@ -1,6 +1,4 @@
 import csv
-import datetime
-from decimal import Decimal
 from datetime import datetime
 
 import psycopg2
@@ -28,7 +26,8 @@ class TestCovidProject:
                         confirmed,
                         deaths,
                         incident_rate,
-                        case_fatality_ratio
+                        case_fatality_ratio,
+                        combined_key
                         FROM covid.covid_stats;'''
             )
             table_data = [dict(r) for r in curr.fetchall()]
@@ -47,31 +46,37 @@ class TestCovidProject:
         run()
         expected_result = [
             {
-                
                 'country_region': 'Afghanistan',
-                'last_update': datetime.strptime('2023-03-10 04:21:03', '%Y-%m-%d %H:%M:%S'),
+                'last_update': datetime.strptime(
+                    '2023-03-10 04:21:03', '%Y-%m-%d %H:%M:%S'
+                ),
                 'confirmed': 209451,
                 'deaths': 7896,
                 'incident_rate': 538.0424508714615,
                 'case_fatality_ratio': 3.76985547932452,
+                'combined_key': 'Afghanistan',
             },
             {
-                
                 'country_region': 'Albania',
-                'last_update': datetime.strptime('2023-03-10 04:21:03', '%Y-%m-%d %H:%M:%S'),
+                'last_update': datetime.strptime(
+                    '2023-03-10 04:21:03', '%Y-%m-%d %H:%M:%S'
+                ),
                 'confirmed': 334457,
                 'deaths': 3598,
                 'incident_rate': 11621.96817012996,
                 'case_fatality_ratio': 1.075773567304616,
+                'combined_key': 'Albania',
             },
             {
-                
                 'country_region': 'Argentina',
-                'last_update': datetime.strptime('2023-03-10 04:21:03', '%Y-%m-%d %H:%M:%S'),
+                'last_update': datetime.strptime(
+                    '2023-03-10 04:21:03', '%Y-%m-%d %H:%M:%S'
+                ),
                 'confirmed': 10044957,
                 'deaths': 130472,
                 'incident_rate': 22225.43269916568,
                 'case_fatality_ratio': 1.2988806223859395,
+                'combined_key': 'Argentina',
             },
         ]
         result = self.get_covid_data()

@@ -1,13 +1,13 @@
-import datetime
 import logging
 import sys
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import psycopg2.extras as p
 import requests
 
 from covid.utils.db import WarehouseConnection
 from covid.utils.db_config import get_warehouse_creds
+
 
 def get_covid_data() -> List[Dict[str, Any]]:
     url = 'https://coronavirus.m.pipedream.net/'
@@ -27,7 +27,8 @@ def _get_covid_insert_query() -> str:
        confirmed,
        deaths,
        incident_rate,
-       case_fatality_ratio
+       case_fatality_ratio,
+       combined_key
     )
     VALUES (
         %(Country_Region)s,
@@ -35,19 +36,24 @@ def _get_covid_insert_query() -> str:
         %(Confirmed)s,
         %(Deaths)s,
         %(Incident_Rate)s,
-        %(Case_Fatality_Ratio)s
+        %(Case_Fatality_Ratio)s,
+        %(Combined_Key)s
     );
     '''
+
+
+def validate_data(rec) -> None:
+    if rec['Incident_Rate'] == '':
+        rec['Incident_Rate'] = 0.0
+    if rec['Case_Fatality_Ratio'] == '':
+        rec['Case_Fatality_Ratio'] = 0.0
 
 
 def run() -> None:
     data = get_covid_data()
     for record in data:
-        if record['Incident_Rate'] == '':
-            record['Incident_Rate'] = 0.0
-        if record['Case_Fatality_Ratio'] == '':
-            record['Case_Fatality_Ratio'] = 0.0
-    
+        validate_data(record)
+
     with WarehouseConnection(get_warehouse_creds()).managed_cursor() as curr:
         p.execute_batch(curr, _get_covid_insert_query(), data)
 

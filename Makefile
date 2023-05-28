@@ -4,7 +4,7 @@ docker-spin-up:
 sleeper:
 	sleep 15
 
-up: docker-spin-up sleeper
+up: docker-spin-up sleeper warehouse-migration
 
 down:
 	docker compose down
@@ -26,3 +26,26 @@ warehouse-migration:
 
 warehouse-rollback:
 	docker exec pipelinerunner yoyo rollback --no-config-file --database postgres://sdeuser:sdepassword1234@warehouse:5432/covid ./migrations
+
+coverage:
+	docker exec pipelinerunner pytest --cov=./src/covid tests/
+
+pytest:
+	docker exec pipelinerunner pytest /code/tests
+
+format:
+	docker exec pipelinerunner python -m black -S --line-length 79 .
+
+isort:
+	docker exec pipelinerunner isort .
+
+type:
+	docker exec pipelinerunner mypy --ignore-missing-imports /code
+
+lint: 
+	docker exec pipelinerunner flake8 /code 
+
+ci: isort format type lint pytest
+
+stop-etl: 
+	docker exec pipelinerunner service cron stop

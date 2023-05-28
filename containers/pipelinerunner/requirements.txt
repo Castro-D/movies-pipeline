@@ -3,6 +3,7 @@ requests
 boto3
 pytest
 pytest-mock
+pytest-cov
 black
 flake8
 mypy
