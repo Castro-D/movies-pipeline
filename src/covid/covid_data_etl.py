@@ -9,7 +9,7 @@ import requests
 from covid.utils.db import WarehouseConnection
 from covid.utils.db_config import get_warehouse_creds
 
-def get_exchange_data() -> List[Dict[str, Any]]:
+def get_covid_data() -> List[Dict[str, Any]]:
     url = 'https://coronavirus.m.pipedream.net/'
     try:
         r = requests.get(url)
@@ -41,7 +41,7 @@ def _get_covid_insert_query() -> str:
 
 
 def run() -> None:
-    data = get_exchange_data()
+    data = get_covid_data()
     for record in data:
         if record['Incident_Rate'] == '':
             record['Incident_Rate'] = 0.0
