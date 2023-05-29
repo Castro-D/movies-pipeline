@@ -1,4 +1,4 @@
-# Covid pipeline
+# Covid data pipeline
 
 This is an etl pipeline to pull covid data from a public api periodically with cron, then gets stored in warehouse.
 
@@ -14,3 +14,7 @@ This is an etl pipeline to pull covid data from a public api periodically with c
 ## Architecture
 
 ![](./assets/images/architecture.png)
+
+## Dashboard
+
+![](./assets/images/board2.png)
