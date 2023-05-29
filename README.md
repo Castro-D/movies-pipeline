@@ -10,3 +10,7 @@ This is an etl pipeline to pull covid data from a public api periodically with c
 - ci/cd
 - Postgres
 - Metabase
+
+## Architecture
+
+![](./assets/images/architecture.png)
