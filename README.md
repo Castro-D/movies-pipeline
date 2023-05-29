@@ -4,6 +4,7 @@ This is an etl pipeline to pull covid data from a public api periodically with c
 
 ## - Tech stack:
 - Python
+- Pytest
 - Terraform for creating GCP compute engine simulating production environment
 - Pytest
 - Docker
