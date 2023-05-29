@@ -9,6 +9,9 @@ up: docker-spin-up sleeper warehouse-migration
 down:
 	docker compose down
 
+####################################################################################################################
+# Set up cloud infrastructure
+
 tf-init:
 	terraform -chdir=./terraform init
 
@@ -17,6 +20,9 @@ infra-up:
 
 infra-down:
 	terraform -chdir=./terraform destroy
+
+####################################################################################################################
+# Datawarehouse migration
 
 db-migration:
 	@read -p "Enter migration name:" migration_name; docker exec pipelinerunner yoyo new ./migrations -m "$${migration_name}_$(date +%Y%m%d%H%M%S)"
